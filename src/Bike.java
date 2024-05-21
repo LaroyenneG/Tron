@@ -3,7 +3,7 @@ import java.util.List;
 
 public class Bike extends Element {
 
-    private final List<Wall> walls;
+    private List<Wall> walls;
 
     private Heading heading;
 

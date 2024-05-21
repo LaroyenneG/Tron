@@ -10,12 +10,6 @@ public class Human extends Player {
 
         Bike bike = getBike();
 
-        /*
-        StdDraw.hasNextKeyTyped();
-        StdDraw.nextKeyTyped();
-        */
-
-
         boolean left = StdDraw.isKeyPressed(37);
         boolean up = StdDraw.isKeyPressed(38);
         boolean right = StdDraw.isKeyPressed(39);

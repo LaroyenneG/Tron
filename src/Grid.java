@@ -99,13 +99,9 @@ public class Grid {
     public void play() {
 
         List<Player> players = new ArrayList<>(this.players);
-
         Collections.shuffle(players);
 
         for (Player player : players) {
-
-            players.remove(player);
-
             if (player.isAlive()) {
                 if (isCrashed(player)) {
                     player.kill();
@@ -125,6 +121,12 @@ public class Grid {
 
         if (isOutOfBounds(x, y)) return true;
 
+        for (Wall wall : bike.getWalls()) {
+            if (bike.equals(wall)) {
+                return true;
+            }
+        }
+
         List<Player> others = new ArrayList<>(this.players);
         others.remove(player);
 
@@ -134,12 +136,6 @@ public class Grid {
 
             if (bike.equals(otherBike)) {
                 return true;
-            }
-
-            for (Wall wall : bike.getWalls()) {
-                if (bike.equals(wall)) {
-                    return true;
-                }
             }
 
             for (Wall wall : otherBike.getWalls()) {

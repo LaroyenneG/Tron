@@ -2,13 +2,13 @@ import java.awt.*;
 
 public abstract class Player {
 
-    private final String name;
+    private String name;
 
-    private final Color color;
+    private Color color;
 
     private boolean alive;
 
-    private final Bike bike;
+    private Bike bike;
 
     public Player(String name, Color color) {
         this.name = name;
