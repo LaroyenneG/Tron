@@ -1,11 +1,11 @@
 import java.awt.*;
 
-public abstract class Component {
+public abstract class Element {
 
     private int x;
     private int y;
 
-    public Component() {
+    public Element() {
         x = 0;
         y = 0;
     }
@@ -31,12 +31,12 @@ public abstract class Component {
         StdDraw.point(x, y);
     }
 
-    public boolean equals(Component component) {
-        return x == component.x && y == component.y;
+    public boolean equals(Element element) {
+        return x == element.x && y == element.y;
     }
 
     public String toString() {
-        return "Component{" +
+        return "Element{" +
                 "x=" + x +
                 ", y=" + y +
                 '}';

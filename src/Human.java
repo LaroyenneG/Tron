@@ -1,22 +1,20 @@
 import java.awt.*;
-import java.util.List;
 
 public class Human extends Player {
 
     public Human(String name, Color color) {
         super(name, color);
-
-        Bike bike = getBike();
-        bike.setHeading(Heading.UP);
-        bike.setX(Grid.SIZE);
-        bike.setY(Grid.SIZE);
     }
 
-    public void play(List<Player> others) {
+    public void play(Grid grid) {
 
         Bike bike = getBike();
 
+        /*
+        StdDraw.hasNextKeyTyped();
         StdDraw.nextKeyTyped();
+        */
+
 
         boolean left = StdDraw.isKeyPressed(37);
         boolean up = StdDraw.isKeyPressed(38);

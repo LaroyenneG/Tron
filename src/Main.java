@@ -1,12 +1,22 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import java.awt.*;
+
 public class Main {
 
     public static void main(String[] args) {
 
+
         Grid grid = new Grid();
+
+        System.out.println("Setup players");
+
+        grid.addPlayer(new Clu("v1", Color.ORANGE));
+        grid.addPlayer(new Human("Guillaume", Color.CYAN));
+
+        System.out.println("Game initialization");
         grid.init();
         grid.display();
+
+        System.out.println("Game started !");
 
         while (grid.isPlaying()) {
 
@@ -26,6 +36,7 @@ public class Main {
             }
         }
 
+        System.out.println("Game over !");
         System.out.println("The winner is " + grid.winner());
     }
 }

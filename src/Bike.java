@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Bike extends Component {
+public class Bike extends Element {
 
     private final List<Wall> walls;
 
@@ -29,6 +29,38 @@ public class Bike extends Component {
         this.heading = heading;
     }
 
+    public int nextX() {
+
+        int result = getX();
+
+        switch (heading) {
+            case RIGHT:
+                result += 1;
+                break;
+            case LEFT:
+                result -= 1;
+                break;
+        }
+
+        return result;
+    }
+
+    public int nextY() {
+
+        int result = getY();
+
+        switch (heading) {
+            case UP:
+                result += 1;
+                break;
+            case DOWN:
+                result -= 1;
+                break;
+        }
+
+        return result;
+    }
+
     public void move() {
 
         int x = getX();
@@ -38,29 +70,31 @@ public class Bike extends Component {
         wall.setX(x);
         wall.setY(y);
 
-        switch (heading) {
-            case UP:
-                y += 1;
-                break;
-            case DOWN:
-                y -= 1;
-                break;
-            case RIGHT:
-                x += 1;
-                break;
-            case LEFT:
-                x -= 1;
-                break;
-        }
+        x = nextX();
+        y = nextY();
 
         setX(x);
         setY(y);
         addWall(wall);
     }
 
+    public boolean touch(int x, int y) {
+
+        boolean result = false;
+
+        for (Wall wall : walls) {
+            if (wall.getX() == x && wall.getY() == y) {
+                result = true;
+                break;
+            }
+        }
+
+        return result;
+    }
+
     public void draw() {
 
-        StdDraw.filledCircle(getX(), getY(), 1);
+        StdDraw.filledCircle(getX(), getY(), 0.8);
 
         for (Wall wall : walls) {
             wall.draw();

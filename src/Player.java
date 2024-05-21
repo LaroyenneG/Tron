@@ -1,5 +1,4 @@
 import java.awt.*;
-import java.util.List;
 
 public abstract class Player {
 
@@ -18,39 +17,8 @@ public abstract class Player {
         bike = new Bike();
     }
 
-    public boolean isCrashed(List<Player> others) {
-
-        int x = bike.getX();
-        int y = bike.getY();
-
-        if (x < 0 || y < 0 || x > Grid.SIZE || y > Grid.SIZE) return true;
-
-        for (Player other : others) {
-
-            Bike otherBike = other.getBike();
-
-            if (bike.equals(otherBike)) {
-                return true;
-            }
-
-            for (Wall wall : bike.getWalls()) {
-                if (bike.equals(wall)) {
-                    return true;
-                }
-            }
-
-            for (Wall wall : otherBike.getWalls()) {
-                if (bike.equals(wall)) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    public void play(List<Player> others) {
-
+    public void play(Grid grid) {
+        // TODO: override me
     }
 
     public Bike getBike() {
@@ -74,6 +42,10 @@ public abstract class Player {
             StdDraw.setPenColor(color);
             bike.draw();
         }
+    }
+
+    public boolean equals(Player player) {
+        return player.color.equals(color);
     }
 
     public String toString() {

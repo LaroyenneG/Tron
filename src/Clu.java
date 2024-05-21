@@ -1,36 +1,32 @@
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 public class Clu extends Player {
 
-    private static final Random RANDOM = new Random();
-
-    public Clu(Color color) {
-        super("Clu", color);
-
-        Bike bike = getBike();
-        //bike.setHeading(Heading.East);
-        bike.setX(0);
-        bike.setY(0);
+    public Clu(String version, Color color) {
+        super("Clu:" + version, color);
     }
 
-    public void play(List<Player> others) {
+    public void play(Grid grid) {
 
-        Bike bike = getBike();
+        Bike myBike = getBike();
 
-        /*
-        Orientation orientation = Orientation.values()[RANDOM.nextInt(Orientation.values().length)];
-        if (orientation == Orientation.South) {
-            orientation = Orientation.North;
+        List<Heading> headings = new ArrayList<>(List.of(Heading.values()));
+        Collections.shuffle(headings);
+
+        while (!headings.isEmpty()) {
+
+            Heading heading = headings.removeFirst();
+            myBike.setHeading(heading);
+
+            int x = myBike.nextX();
+            int y = myBike.nextY();
+
+            if (!grid.isOutOfBounds(x, y) && !grid.hasConflict(x, y)) {
+                return;
+            }
         }
-
-               if (RANDOM.nextBoolean()) {
-            bike.setOrientation(Orientation.East);
-        } else {
-            bike.setOrientation(Orientation.North);
-        }
-        */
-
     }
 }

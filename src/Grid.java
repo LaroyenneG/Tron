@@ -2,24 +2,28 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 public class Grid {
+
+    private static final Random RANDOM = new Random();
 
     public static final int SIZE = 50;
 
     private List<Player> players;
 
     public Grid() {
-
         this.players = new ArrayList<>();
-
-        Human human = new Human("Guillaume", Color.CYAN);
-        Clu clu = new Clu(Color.ORANGE);
-
-        this.players.add(human);
-        this.players.add(clu);
     }
 
+    public void init() {
+        StdDraw.setTitle("Tron");
+        StdDraw.enableDoubleBuffering();
+        StdDraw.setCanvasSize(800, 800);
+        StdDraw.setScale(0, SIZE);
+        drawGrid();
+        StdDraw.show();
+    }
 
     public void move() {
         for (Player player : players) {
@@ -36,7 +40,7 @@ public class Grid {
         StdDraw.setPenColor(Color.LIGHT_GRAY);
         StdDraw.setPenRadius(0.0005);
 
-        for (int i = 0; i <= SIZE; i++) {
+        for (int i = 0; i < SIZE; i++) {
             StdDraw.line(i, 0, i, SIZE);
             StdDraw.line(0, i, SIZE, i);
         }
@@ -50,16 +54,6 @@ public class Grid {
             player.draw();
         }
 
-        StdDraw.show();
-    }
-
-
-    public void init() {
-        StdDraw.setTitle("Tron");
-        StdDraw.enableDoubleBuffering();
-        StdDraw.setCanvasSize(800, 800);
-        StdDraw.setScale(0, SIZE);
-        drawGrid();
         StdDraw.show();
     }
 
@@ -90,6 +84,18 @@ public class Grid {
         return winner;
     }
 
+    public void addPlayer(Player player) {
+
+        Heading[] headings = Heading.values();
+
+        Bike bike = player.getBike();
+        bike.setX(RANDOM.nextInt(Grid.SIZE));
+        bike.setY(RANDOM.nextInt(Grid.SIZE));
+        bike.setHeading(headings[RANDOM.nextInt(headings.length)]);
+
+        this.players.add(player);
+    }
+
     public void play() {
 
         List<Player> players = new ArrayList<>(this.players);
@@ -101,12 +107,76 @@ public class Grid {
             players.remove(player);
 
             if (player.isAlive()) {
-                if (player.isCrashed(players)) {
+                if (isCrashed(player)) {
                     player.kill();
                 } else {
-                    player.play(players);
+                    player.play(this);
                 }
             }
         }
+    }
+
+    public boolean isCrashed(Player player) {
+
+        Bike bike = player.getBike();
+
+        int x = bike.getX();
+        int y = bike.getY();
+
+        if (isOutOfBounds(x, y)) return true;
+
+        List<Player> others = new ArrayList<>(this.players);
+        others.remove(player);
+
+        for (Player other : others) {
+
+            Bike otherBike = other.getBike();
+
+            if (bike.equals(otherBike)) {
+                return true;
+            }
+
+            for (Wall wall : bike.getWalls()) {
+                if (bike.equals(wall)) {
+                    return true;
+                }
+            }
+
+            for (Wall wall : otherBike.getWalls()) {
+                if (bike.equals(wall)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+
+    public boolean isOutOfBounds(Element element) {
+        return isOutOfBounds(element.getX(), element.getY());
+    }
+
+    public boolean isOutOfBounds(int x, int y) {
+        return x < 0 || y < 0 || x >= Grid.SIZE || y >= Grid.SIZE;
+    }
+
+    public boolean hasConflict(Element element) {
+        return hasConflict(element.getX(), element.getY());
+    }
+
+    public boolean hasConflict(int x, int y) {
+
+        boolean result = false;
+
+        for (Player player : players) {
+            Bike bike = player.getBike();
+            if (bike.touch(x, y)) {
+                result = true;
+                break;
+            }
+        }
+
+        return result;
     }
 }
