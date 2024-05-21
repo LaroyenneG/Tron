@@ -7,7 +7,7 @@ public class Human extends Player {
         super(name, color);
 
         Bike bike = getBike();
-        bike.setOrientation(Orientation.West);
+        bike.setHeading(Heading.UP);
         bike.setX(Grid.SIZE);
         bike.setY(Grid.SIZE);
     }
@@ -16,22 +16,24 @@ public class Human extends Player {
 
         Bike bike = getBike();
 
+        StdDraw.nextKeyTyped();
+
         boolean left = StdDraw.isKeyPressed(37);
         boolean up = StdDraw.isKeyPressed(38);
         boolean right = StdDraw.isKeyPressed(39);
         boolean down = StdDraw.isKeyPressed(40);
 
         if (left) {
-            bike.setOrientation(Orientation.West);
+            bike.setHeading(Heading.LEFT);
         }
         if (up) {
-            bike.setOrientation(Orientation.North);
+            bike.setHeading(Heading.UP);
         }
         if (right) {
-            bike.setOrientation(Orientation.East);
+            bike.setHeading(Heading.RIGHT);
         }
         if (down) {
-            bike.setOrientation(Orientation.South);
+            bike.setHeading(Heading.DOWN);
         }
     }
 }

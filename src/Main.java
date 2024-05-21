@@ -6,7 +6,6 @@ public class Main {
 
         Grid grid = new Grid();
         grid.init();
-
         grid.display();
 
         while (grid.isPlaying()) {
@@ -23,6 +22,7 @@ public class Main {
                 Thread.sleep(Math.max(100 - (end - start), 0));
             } catch (InterruptedException e) {
                 e.printStackTrace();
+                break;
             }
         }
 

@@ -7,7 +7,7 @@ public class Grid {
 
     public static final int SIZE = 50;
 
-    private final List<Player> players;
+    private List<Player> players;
 
     public Grid() {
 

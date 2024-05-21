@@ -10,7 +10,7 @@ public class Clu extends Player {
         super("Clu", color);
 
         Bike bike = getBike();
-        bike.setOrientation(Orientation.East);
+        //bike.setHeading(Heading.East);
         bike.setX(0);
         bike.setY(0);
     }
@@ -24,12 +24,13 @@ public class Clu extends Player {
         if (orientation == Orientation.South) {
             orientation = Orientation.North;
         }
-        */
-        if (RANDOM.nextBoolean()) {
+
+               if (RANDOM.nextBoolean()) {
             bike.setOrientation(Orientation.East);
         } else {
             bike.setOrientation(Orientation.North);
         }
+        */
 
     }
 }

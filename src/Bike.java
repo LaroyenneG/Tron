@@ -1,15 +1,15 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Bike extends Element {
+public class Bike extends Component {
 
     private final List<Wall> walls;
 
-    private Orientation orientation;
+    private Heading heading;
 
     public Bike() {
         super();
-        orientation = Orientation.North;
+        heading = Heading.UP;
         walls = new ArrayList<>();
     }
 
@@ -21,21 +21,12 @@ public class Bike extends Element {
         walls.add(wall);
     }
 
-    public Orientation getOrientation() {
-        return orientation;
+    public Heading getHeading() {
+        return heading;
     }
 
-    public void setOrientation(Orientation orientation) {
-        this.orientation = orientation;
-    }
-
-    public void draw() {
-
-        StdDraw.filledCircle(getX(), getY(), 1);
-
-        for (Wall wall : walls) {
-            wall.draw();
-        }
+    public void setHeading(Heading heading) {
+        this.heading = heading;
     }
 
     public void move() {
@@ -46,24 +37,33 @@ public class Bike extends Element {
         Wall wall = new Wall();
         wall.setX(x);
         wall.setY(y);
-        addWall(wall);
 
-        switch (orientation) {
-            case North:
+        switch (heading) {
+            case UP:
                 y += 1;
                 break;
-            case South:
+            case DOWN:
                 y -= 1;
                 break;
-            case East:
+            case RIGHT:
                 x += 1;
                 break;
-            case West:
+            case LEFT:
                 x -= 1;
                 break;
         }
 
         setX(x);
         setY(y);
+        addWall(wall);
+    }
+
+    public void draw() {
+
+        StdDraw.filledCircle(getX(), getY(), 1);
+
+        for (Wall wall : walls) {
+            wall.draw();
+        }
     }
 }

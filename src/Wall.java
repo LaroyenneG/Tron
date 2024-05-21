@@ -1,4 +1,4 @@
-public class Wall extends Element {
+public class Wall extends Component {
 
     public Wall() {
         super();
