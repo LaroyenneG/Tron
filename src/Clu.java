@@ -5,16 +5,19 @@ import java.util.List;
 
 public class Clu extends Player {
 
+    private List<Heading> headings;
+
     public Clu(String version, Color color) {
         super("Clu:" + version, color);
+        headings = new ArrayList<>(List.of(Heading.values()));
+        Collections.shuffle(headings);
     }
 
     public void play(Grid grid) {
 
         Bike myBike = getBike();
 
-        List<Heading> headings = new ArrayList<>(List.of(Heading.values()));
-        Collections.shuffle(headings);
+        List<Heading> headings = new ArrayList<>(this.headings);
 
         while (!headings.isEmpty()) {
 
