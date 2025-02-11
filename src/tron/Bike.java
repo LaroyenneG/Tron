@@ -1,9 +1,13 @@
+package tron;
+
+import lib.StdDraw;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Bike extends Element {
 
-    private List<Wall> walls;
+    private final List<Wall> walls;
 
     private Heading heading;
 
@@ -82,7 +86,7 @@ public class Bike extends Element {
 
         boolean result = false;
 
-        for (Wall wall : walls) {
+        for (var wall : walls) {
             if (wall.getX() == x && wall.getY() == y) {
                 result = true;
                 break;
@@ -92,11 +96,12 @@ public class Bike extends Element {
         return result;
     }
 
+    @Override
     public void draw() {
 
         StdDraw.filledCircle(getX(), getY(), 0.8);
 
-        for (Wall wall : walls) {
+        for (var wall : walls) {
             wall.draw();
         }
     }

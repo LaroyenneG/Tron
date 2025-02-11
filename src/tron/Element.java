@@ -1,4 +1,4 @@
-import java.awt.*;
+package tron;
 
 public abstract class Element {
 
@@ -26,15 +26,16 @@ public abstract class Element {
         this.y = y;
     }
 
-    public void draw() {
-        StdDraw.setPenColor(Color.PINK);
-        StdDraw.point(x, y);
+    public abstract void draw();
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof Element that)) return false;
+        return x == that.x && y == that.y;
     }
 
-    public boolean equals(Element element) {
-        return x == element.x && y == element.y;
-    }
-
+    @Override
     public String toString() {
         return "Element{" +
                 "x=" + x +

@@ -1,3 +1,7 @@
+package tron;
+
+import lib.StdDraw;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,27 +10,31 @@ import java.util.Random;
 
 public class Grid {
 
+    private static final String TITLE = "Tron";
+    private static final int WIDTH = 800;
+    private static final int HEIGHT = 800;
+
     private static final Random RANDOM = new Random();
 
     public static final int SIZE = 50;
 
-    private List<Player> players;
+    private final List<Player> players;
 
     public Grid() {
         this.players = new ArrayList<>();
     }
 
     public void init() {
-        StdDraw.setTitle("Tron");
+        StdDraw.setTitle(TITLE);
         StdDraw.enableDoubleBuffering();
-        StdDraw.setCanvasSize(800, 800);
+        StdDraw.setCanvasSize(WIDTH, HEIGHT);
         StdDraw.setScale(0, SIZE);
         drawGrid();
         StdDraw.show();
     }
 
     public void move() {
-        for (Player player : players) {
+        for (var player : players) {
             if (player.isAlive()) {
                 Bike bike = player.getBike();
                 bike.move();
@@ -50,7 +58,7 @@ public class Grid {
 
         drawGrid();
 
-        for (Player player : players) {
+        for (var player : players) {
             player.draw();
         }
 
@@ -61,7 +69,7 @@ public class Grid {
 
         int counter = 0;
 
-        for (Player player : players) {
+        for (var player : players) {
             if (player.isAlive()) {
                 counter++;
             }
@@ -73,20 +81,20 @@ public class Grid {
 
     public Player winner() {
 
-        Player winner = null;
+        Player result = null;
 
-        for (Player player : players) {
+        for (var player : players) {
             if (player.isAlive()) {
-                winner = player;
+                result = player;
             }
         }
 
-        return winner;
+        return result;
     }
 
     public void addPlayer(Player player) {
 
-        Heading[] headings = Heading.values();
+        var headings = Heading.values();
 
         Bike bike = player.getBike();
         bike.setX(RANDOM.nextInt(Grid.SIZE));
@@ -98,10 +106,10 @@ public class Grid {
 
     public void play() {
 
-        List<Player> players = new ArrayList<>(this.players);
+        var players = new ArrayList<>(this.players);
         Collections.shuffle(players);
 
-        for (Player player : players) {
+        for (var player : players) {
             if (player.isAlive()) {
                 if (isCrashed(player)) {
                     player.kill();
@@ -114,25 +122,25 @@ public class Grid {
 
     public boolean isCrashed(Player player) {
 
-        Bike bike = player.getBike();
+        var bike = player.getBike();
 
         int x = bike.getX();
         int y = bike.getY();
 
         if (isOutOfBounds(x, y)) return true;
 
-        for (Wall wall : bike.getWalls()) {
+        for (var wall : bike.getWalls()) {
             if (bike.equals(wall)) {
                 return true;
             }
         }
 
-        List<Player> others = new ArrayList<>(this.players);
+        var others = new ArrayList<>(this.players);
         others.remove(player);
 
-        for (Player other : others) {
+        for (var other : others) {
 
-            Bike otherBike = other.getBike();
+            var otherBike = other.getBike();
 
             if (bike.equals(otherBike)) {
                 return true;
@@ -165,8 +173,8 @@ public class Grid {
 
         boolean result = false;
 
-        for (Player player : players) {
-            Bike bike = player.getBike();
+        for (var player : players) {
+            var bike = player.getBike();
             if (bike.touch(x, y)) {
                 result = true;
                 break;

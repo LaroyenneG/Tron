@@ -1,14 +1,16 @@
+package tron;
+
+import lib.StdDraw;
+
 import java.awt.*;
 
 public abstract class Player {
 
-    private String name;
-
-    private Color color;
+    private final String name;
+    private final Color color;
+    private final Bike bike;
 
     private boolean alive;
-
-    private Bike bike;
 
     public Player(String name, Color color) {
         this.name = name;
@@ -17,9 +19,7 @@ public abstract class Player {
         bike = new Bike();
     }
 
-    public void play(Grid grid) {
-        // TODO: override me
-    }
+    public abstract void play(Grid grid);
 
     public Bike getBike() {
         return bike;
@@ -44,10 +44,14 @@ public abstract class Player {
         }
     }
 
-    public boolean equals(Player player) {
-        return player.color.equals(color);
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof Player that)) return false;
+        return color.equals(that.color);
     }
 
+    @Override
     public String toString() {
         return "Player: " + name;
     }
